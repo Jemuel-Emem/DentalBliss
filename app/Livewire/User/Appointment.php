@@ -5,28 +5,38 @@ namespace App\Livewire\User;
 use App\Models\appointment as Appointments;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Appointment extends Component
 {
+    use WithFileUploads;
+
     public $name;
     public $phone_number;
     public $address;
     public $date_schedule;
+    public $time_schedule;
     public $reason;
+    public $mop;
+    public $receipt;
 
     protected $rules = [
         'name' => 'required|string|max:255',
         'phone_number' => 'required|string|max:20',
         'address' => 'required|string|max:255',
         'date_schedule' => 'required|date',
+        'time_schedule' => 'required|date_format:H:i',
         'reason' => 'required|string|max:500',
+        'mop' => 'required|in:Walk-in,Gcash,Credit Card',
+        'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
     ];
 
     public function submit()
     {
-
         $this->validate();
 
+
+        $receiptPath = $this->receipt ? $this->receipt->store('receipts', 'public') : null;
 
         Appointments::create([
             'user_id' => Auth::id(),
@@ -34,15 +44,16 @@ class Appointment extends Component
             'phone_number' => $this->phone_number,
             'address' => $this->address,
             'date_schedule' => $this->date_schedule,
+            'time_schedule' => $this->time_schedule,
             'reason' => $this->reason,
+            'mop' => $this->mop,
+            'receipt' => $receiptPath,
             'status' => 'processing',
         ]);
-
 
         $this->reset();
 
         flash()->success('Appointment created successfully!');
-
     }
 
     public function render()

@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- @wireUiScripts --}}
@@ -17,6 +18,7 @@
             background-color: #F0FFF4; /* Light green */
         }
     </style>
+
 </head>
 <body class="bg-green-light">
     @livewireScripts
@@ -26,7 +28,7 @@
           <div class="flex flex-row items-center justify-between text-black">
             <a class="inline-flex items-center gap-3 text-xl font-bold tracking-tight text-black" href="/dashboard">
               <img src="{{ asset('images/dental-floss.png') }}" class="h-8 rounded-full" alt="Flowbite Logo" />
-              <span class="text-red-600 font-bold">Dentabliss Dental Care</span>
+              <span class="text-red-600 font-bold">Dental Bliss </span>
             </a>
             <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
               <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">

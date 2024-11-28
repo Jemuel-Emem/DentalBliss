@@ -1,42 +1,68 @@
-<div class="w-5/12 mx-auto p-6 bg-white rounded-lg shadow-lg mb-4 mt-4">
+<div class="w-full sm:w-8/12 mx-auto p-6 sm:p-8 bg-white rounded-lg shadow-lg mb-4 mt-4 h-fit">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Appointment Form</h2>
 
     <div class="mb-6">
         <h3 class="text-xl font-medium text-gray-700 mb-4">Schedule Your Appointment</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Name Field -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+
             <div>
                 <label class="block text-sm font-medium text-gray-700">Name</label>
                 <input type="text" wire:model="name" class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="Name">
                 @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
-            <!-- Phone Number Field -->
+
             <div>
                 <label class="block text-sm font-medium text-gray-700">Phone Number</label>
                 <input type="text" wire:model="phone_number" class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="Phone Number">
                 @error('phone_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
-            <!-- Address Field -->
-            <div class="md:col-span-2">
+
+            <div class="sm:col-span-2">
                 <label class="block text-sm font-medium text-gray-700">Address</label>
                 <input type="text" wire:model="address" class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="Address">
                 @error('address') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
-            <!-- Date of Schedule -->
-            <div class="md:col-span-2">
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Time of Schedule</label>
+                <input type="time" wire:model="time_schedule" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                @error('time_schedule') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+
+
+            <div>
                 <label class="block text-sm font-medium text-gray-700">Date of Schedule</label>
                 <input type="date" wire:model="date_schedule" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
                 @error('date_schedule') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
-            <!-- Reason for Appointment -->
-            <div class="md:col-span-2">
+
+            <div class="sm:col-span-2">
                 <label class="block text-sm font-medium text-gray-700">Reason for Appointment</label>
                 <textarea wire:model="reason" rows="4" class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="Describe the reason for your appointment"></textarea>
                 @error('reason') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+
+
+            <div class="sm:col-span-2">
+                <label class="block text-sm font-medium text-gray-700">Mode of Payment</label>
+                <select wire:model="mop" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                    <option value="Walk-in">Walk-in</option>
+                    <option value="Gcash">Gcash</option>
+                    <option value="Credit Card">Credit Card</option>
+                </select>
+                @error('mop') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+
+
+            <div class="sm:col-span-2" x-data="{ show: false }" x-init="$watch('$wire.mop', value => show = ['Gcash', 'Credit Card'].includes(value))">
+                <label class="block text-sm font-medium text-gray-700">Receipt (Optional for Gcash/Credit Card)</label>
+                <input type="file" wire:model="receipt" class="w-full mt-1 p-2 border border-gray-300 rounded-md" x-show="show">
+                @error('receipt') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
         </div>
     </div>

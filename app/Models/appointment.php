@@ -14,8 +14,11 @@ class appointment extends Model
         'phone_number',
         'address',
         'date_schedule',
-        'reason'
-
+        'time_schedule',
+        'reason',
+        'status',
+        'mop',
+        'receipt',
     ];
     protected $casts = [
         'date_schedule' => 'date',

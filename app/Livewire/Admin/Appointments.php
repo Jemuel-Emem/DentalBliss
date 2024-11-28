@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Appointments extends Component
 {
+    public $search = '';
     public $appointments;
 
     public function mount()
@@ -15,7 +16,10 @@ class Appointments extends Component
 
         $this->appointments = Appointment::all();
     }
-
+    public function searchAppointments()
+    {
+        $this->appointments = Appointment::where('name', 'like', '%' . $this->search . '%')->get();
+    }
     public function approve($id)
     {
         $appointment = Appointment::find($id);
@@ -50,8 +54,11 @@ class Appointments extends Component
         }
     }
 
+
     public function render()
     {
-        return view('livewire.admin.appointments');
+        $appointments = Appointment::where('name', 'like', '%' . $this->search . '%')->get();
+
+        return view('livewire.admin.appointments', compact('appointments'));
     }
 }

@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone_number');
             $table->date('date_schedule');
+            $table->time('time_schedule');
             $table->text('reason');
+
             $table->string('status')->default('processing');
 
             $table->timestamps();
