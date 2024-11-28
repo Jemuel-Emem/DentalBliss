@@ -13,6 +13,7 @@
                     <th class="py-3 px-6 text-left text-gray-700 font-semibold border-b">Reason</th>
                     <th class="py-3 px-6 text-left text-gray-700 font-semibold border-b">Scheduled Date</th>
                     <th class="py-3 px-6 text-left text-gray-700 font-semibold border-b">Status</th>
+                    <th class="py-3 px-6 text-left text-gray-700 font-semibold border-b">Prescriptions</th> <!-- Added column for Prescriptions -->
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,21 @@
                             @else bg-yellow-100 text-yellow-600 @endif">
                                 {{ $appointment->status }}
                             </span>
+                        </td>
+                        <td class="py-4 px-6">
+
+                            @if($appointment->prescriptions->isEmpty())
+                                <span>No prescriptions available</span>
+                            @else
+                                <ul>
+                                    @foreach($appointment->prescriptions as $prescription)
+                                        <li class="mb-2">
+                                            <strong>Treatment:</strong> {{ $prescription->treatment }}<br>
+                                            <strong>Medicine:</strong> {{ $prescription->medicine }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

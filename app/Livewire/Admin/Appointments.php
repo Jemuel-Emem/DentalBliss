@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Prescription;
 use App\Models\Appointment;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
 
 class Appointments extends Component
 {
@@ -13,28 +13,37 @@ class Appointments extends Component
 
     public function mount()
     {
-
+        // Initialize appointments on component mount
         $this->appointments = Appointment::all();
     }
-    public function searchAppointments()
+
+    public function updatedSearch() // Automatically reacts to changes in search
     {
         $this->appointments = Appointment::where('name', 'like', '%' . $this->search . '%')->get();
     }
+
     public function approve($id)
     {
         $appointment = Appointment::find($id);
 
         if ($appointment) {
             $appointment->status = 'Approved';
-            if ($appointment->save()) {
-                session()->flash('message', 'Appointment approved successfully!');
-            } else {
-                session()->flash('message', 'Failed to approve appointment.');
-            }
+            $appointment->save();
 
+            // Create a new prescription record for the approved appointment
+            Prescription::create([
+                'appointment_id' => $appointment->id,
+                'treatment' => '',
+                'medicine' => '',
+            ]);
 
-            $this->appointments = Appointment::all();
+            session()->flash('message', 'Appointment approved successfully!');
+        } else {
+            session()->flash('message', 'Failed to approve appointment.');
         }
+
+        // Refresh the list of appointments
+        $this->appointments = Appointment::all();
     }
 
     public function decline($id)
@@ -49,16 +58,13 @@ class Appointments extends Component
                 session()->flash('message', 'Failed to decline appointment.');
             }
 
-
+            // Refresh the list of appointments
             $this->appointments = Appointment::all();
         }
     }
 
-
     public function render()
     {
-        $appointments = Appointment::where('name', 'like', '%' . $this->search . '%')->get();
-
-        return view('livewire.admin.appointments', compact('appointments'));
+        return view('livewire.admin.appointments');
     }
 }

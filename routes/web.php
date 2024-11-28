@@ -32,6 +32,10 @@ Route::prefix('admin')->middleware(['auth', admin::class])->group(function () {
         return view('admin.appointments');
     })->name('apps');
 
+    Route::get('/Prescriptions', function () {
+        return view('admin.prescription');
+    })->name('pres');
+
 
     Route::post('/logout', function () {
         Auth::logout();

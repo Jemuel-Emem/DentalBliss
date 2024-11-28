@@ -2,9 +2,8 @@
     <div>
 
         <div class=" ">
-            <livewire:admin.appointments/>
+            <livewire:admin.prescription/>
         </div>
-
 
     </div>
 </x-admin-layout>
