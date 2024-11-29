@@ -10,6 +10,7 @@ use Livewire\Volt\Component;
 
 new #[Layout('layouts.guest')] class extends Component
 {
+    public string $number = '';
     public string $name = '';
     public string $email = '';
     public string $password = '';
@@ -22,6 +23,7 @@ new #[Layout('layouts.guest')] class extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
+            'number' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -43,6 +45,11 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+        <div>
+            <x-input-label for="number" :value="__('number')" />
+            <x-text-input wire:model="number" id="number" class="block mt-1 w-full" type="text" number="number" required autofocus autocomplete="number" />
+            <x-input-error :messages="$errors->get('number')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
