@@ -6,7 +6,7 @@ use App\Http\Controllers\authlogout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Route::view('/', 'login')->name('login');
+Route::view('/', 'welcome');
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
@@ -36,7 +36,14 @@ Route::prefix('admin')->middleware(['auth', admin::class])->group(function () {
         return view('admin.prescription');
     })->name('pres');
 
+    Route::get('/History', function () {
+        return view('admin.history');
+    })->name('histor');
 
+
+    Route::get('/payment', function () {
+        return view('admin.payment');
+    })->name('pays');
     Route::post('/logout', function () {
         Auth::logout();
         return redirect('/login');
@@ -58,6 +65,9 @@ Route::prefix('user')->middleware(['auth', user::class])->group(function () {
         return view('user.status');
     })->name('statuss');
 
+    Route::get('/payment', function () {
+        return view('user.payment');
+    })->name('pay');
 
     Route::post('/logout', function () {
         Auth::logout();

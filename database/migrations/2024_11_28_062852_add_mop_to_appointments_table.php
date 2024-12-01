@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('appointments', function (Blueprint $table) {
             //
-            $table->string('mop')->default('Walk-in')->after('reason');
+          //  $table->string('mop')->default('Walk-in')->after('reason');
         });
     }
 

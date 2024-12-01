@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('appointments', function (Blueprint $table) {
             //
-            $table->string('receipt')->nullable()->after('mop');
+          //  $table->string('receipt')->nullable()->after('mop');
         });
     }
 

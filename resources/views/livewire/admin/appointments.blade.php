@@ -27,8 +27,6 @@
                     <th class="py-2 px-4 border-b">Time Schedule</th>
                     <th class="py-2 px-4 border-b">Date Schedule</th>
                     <th class="py-2 px-4 border-b">Reason</th>
-                    <th class="py-2 px-4 border-b">Mode of Payment</th> <!-- Added Mode of Payment -->
-                    <th class="py-2 px-4 border-b">Receipt</th> <!-- Added Receipt -->
                     <th class="py-2 px-4 border-b">Status</th>
                     <th class="py-2 px-4 border-b">Actions</th>
                 </tr>
@@ -43,21 +41,6 @@
                         <td class="py-2 px-4 border-b">{{ $appointment->date_schedule->format('Y-m-d') }}</td>
                         <td class="py-2 px-4 border-b">{{ $appointment->reason }}</td>
 
-                        <!-- Mode of Payment Column -->
-                        <td class="py-2 px-4 border-b">{{ $appointment->mop }}</td>
-
-                        <!-- Receipt Column -->
-                        <td class="py-2 px-4 border-b">
-
-                            @if(in_array($appointment->mop, ['Gcash', 'Credit Card']) && $appointment->receipt)
-                            <a href="{{ asset('storage/' . $appointment->receipt) }}" target="_blank" class="text-blue-500 hover:underline">
-                                View Receipt
-                            </a>
-
-                            @else
-                                No Receipt
-                            @endif
-                        </td>
 
                         <td class="py-2 px-4 border-b">{{ $appointment->status }}</td>
                         <td class="py-2 px-4 border-b flex " >

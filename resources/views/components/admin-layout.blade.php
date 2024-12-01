@@ -123,6 +123,20 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{route('histor')}}" class="flex items-center p-2 rounded-lg hover:bg-gray-700">
+                        <i class="text-red-500 ri-file-history-line"></i>
+                        <span class="ms-3 text-gray-500">History Login</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('pays')}}" class="flex items-center p-2 rounded-lg hover:bg-gray-700">
+                        <i class="text-red-500 ri-file-history-line"></i>
+                        <span class="ms-3 text-gray-500">Payment</span>
+                    </a>
+                </li>
+
 
                     {{-- <li>
                         <a href="" class="flex items-center p-2 rounded-lg hover:bg-gray-700">

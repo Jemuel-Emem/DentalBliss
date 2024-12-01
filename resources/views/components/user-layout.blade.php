@@ -37,10 +37,12 @@
               </svg>
             </button>
           </div>
-          <nav :class="{'flex': open, 'hidden': !open}" class="flex-col items-center flex-grow hidden gap-3 p-4 px-5 text-sm font-medium text-gray-500 md:px-0 md:pb-0 md:flex md:justify-start md:flex-row lg:p-0 md:mt-0">
+          <nav :class="{'flex': open, 'hidden': !open}" class="flex-col items-center hidden gap-3 p-4 px-5 text-sm font-medium text-gray-500 md:px-0 md:pb-0 md:flex md:justify-start md:flex-row lg:p-0 md:mt-0">
             <a class="hover:text-white focus:outline-none focus:text-gray-500 md:ml-auto text-gray-500" href="{{route('appointment')}}">Appointment
             </a>
             <a class="hover:text-black focus:outline-none focus:text-gray-500 md:mr-auto" href="{{route('statuss')}}">Appointment Status
+            </a>
+            <a class="hover:text-black focus:outline-none focus:text-gray-500 md:mr-auto" href="{{route('pay')}}">Payment
             </a>
 
             <form method="POST" action="{{ route('logout') }}">

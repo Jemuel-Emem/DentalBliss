@@ -27,8 +27,7 @@ class Appointment extends Component
         'date_schedule' => 'required|date',
         'time_schedule' => 'required|date_format:H:i',
         'reason' => 'required|string|max:500',
-        'mop' => 'required|in:Walk-in,Gcash,Credit Card',
-        'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+
     ];
 
     public function submit()
@@ -36,7 +35,7 @@ class Appointment extends Component
         $this->validate();
 
 
-        $receiptPath = $this->receipt ? $this->receipt->store('receipts', 'public') : null;
+        //$receiptPath = $this->receipt ? $this->receipt->store('receipts', 'public') : null;
 
         Appointments::create([
             'user_id' => Auth::id(),
@@ -46,8 +45,8 @@ class Appointment extends Component
             'date_schedule' => $this->date_schedule,
             'time_schedule' => $this->time_schedule,
             'reason' => $this->reason,
-            'mop' => $this->mop,
-            'receipt' => $receiptPath,
+           // 'mop' => $this->mop,
+           // 'receipt' => $receiptPath,
             'status' => 'processing',
         ]);
 

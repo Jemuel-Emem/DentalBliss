@@ -48,8 +48,19 @@
             </div>
 
 
-            <div class="sm:col-span-2">
+            {{-- <div class="sm:col-span-2">
                 <label class="block text-sm font-medium text-gray-700">Mode of Payment</label>
+                <p class="text-sm text-gray-500 mb-3">Please select your preferred mode of payment and upload a receipt if required.</p>
+
+    <div class="flex space-x-4 mb-4">
+
+        <div class="flex items-center">
+            <img src="{{ asset('images/gcash.jpg') }}" alt="Gcash" class="w-16 h-16 rounded-md shadow-md">
+        </div>
+        <div class="flex items-center">
+            <img src="{{ asset('images/bdo.jpg') }}" alt="BDO" class="w-16 h-16 rounded-md shadow-md">
+        </div>
+    </div>
                 <select wire:model="mop" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
                     <option value="Walk-in">Walk-in</option>
                     <option value="Gcash">Gcash</option>
@@ -65,7 +76,7 @@
                 @error('receipt') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="flex justify-end mt-6">
         <button wire:click="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit</button>

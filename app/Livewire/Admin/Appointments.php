@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 use App\Mail\AppointmentApprovedMail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Prescription;
+use App\Models\payment;
 use App\Models\Appointment;
 use Livewire\Component;
 
@@ -22,30 +23,10 @@ class Appointments extends Component
     {
         $this->appointments = Appointment::where('name', 'like', '%' . $this->search . '%')->get();
     }
+public function searchAppointments(){
 
-    // public function approve($id)
-    // {
-    //     $appointment = Appointment::find($id);
+}
 
-    //     if ($appointment) {
-    //         $appointment->status = 'Approved';
-    //         $appointment->save();
-
-
-    //         Prescription::create([
-    //             'appointment_id' => $appointment->id,
-    //             'treatment' => '',
-    //             'medicine' => '',
-    //         ]);
-
-    //         session()->flash('message', 'Appointment approved successfully!');
-    //     } else {
-    //         session()->flash('message', 'Failed to approve appointment.');
-    //     }
-
-    //     // Refresh the list of appointments
-    //     $this->appointments = Appointment::all();
-    // }
     public function approve($id)
     {
         $appointment = Appointment::find($id);
@@ -58,6 +39,13 @@ class Appointments extends Component
                 'appointment_id' => $appointment->id,
                 'treatment' => '',
                 'medicine' => '',
+            ]);
+
+            payment::create([
+                'user_id' => $appointment->id,
+                'appointment_id' => $appointment->id,
+                'status' => 'pending',
+                'payment_date' => null,
             ]);
 
             // Send email to the user
