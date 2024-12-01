@@ -42,7 +42,7 @@ public function searchAppointments(){
             ]);
 
             payment::create([
-                'user_id' => $appointment->id,
+                'user_id' => $appointment->user_id,
                 'appointment_id' => $appointment->id,
                 'status' => 'pending',
                 'payment_date' => null,

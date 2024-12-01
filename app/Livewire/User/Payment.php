@@ -2,8 +2,9 @@
 
 namespace App\Livewire\User;
 
-use App\Models\Payment as Fee;
+use App\Models\payment as Fee;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
 
 class Payment extends Component
@@ -21,7 +22,7 @@ class Payment extends Component
     public function mount()
     {
 
-        $this->payments = Fee::where('appointment_id', auth()->id())->get();
+      $this->payments = Fee::where('appointment_id', Auth::id())->get();
     }
 
 
@@ -44,27 +45,25 @@ class Payment extends Component
         $this->reset(['selectedPayment', 'receipt']);
     }
 
-    public function updatePayment()
+   public function updatePayment()
     {
-
-
-        if ($this->receipt) {
-
-            $this->receipt->storeAs('receipts', $this->receipt->getClientOriginalName(), 'public');
-            $this->selectedPayment->receipt = 'receipts/' . $this->receipt->getClientOriginalName();
+        // Check if receipt is being updated
+        if ($this->receipt instanceof \Illuminate\Http\UploadedFile) {
+            // Store the file and update the receipt path
+            $filename = $this->receipt->getClientOriginalName();
+            $this->receipt->storeAs('receipts', $filename, 'public');
+            $this->selectedPayment->receipt = 'receipts/' . $filename;
         }
 
-
-        $this->selectedPayment->amount  = $this->amount;
+        // Update other payment details
+        $this->selectedPayment->amount = $this->amount;
         $this->selectedPayment->method = $this->method;
         $this->selectedPayment->reference_number = $this->reference_number;
-
 
         $this->selectedPayment->save();
 
         $this->closeModal();
         $this->payments = Fee::where('appointment_id', auth()->id())->get();
-
 
         session()->flash('message', 'Payment updated successfully!');
     }
