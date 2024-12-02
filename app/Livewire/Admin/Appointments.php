@@ -70,7 +70,7 @@ public function searchAppointments(){
             $appointment->status = 'Declined';
             $appointment->save();
 
-            // Send email if appointment has a user
+
             if ($appointment->user) {
                 Mail::to($appointment->user->email)->send(new AppointmentDeclineMail($appointment));
             }
