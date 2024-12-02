@@ -1,14 +1,14 @@
 <div class="p-6 bg-white shadow-md rounded-lg">
-    <!-- Heading -->
+
     <h2 class="text-xl font-semibold text-gray-800 mb-4">User Login Information</h2>
 
-    <!-- List of Users -->
+
     @php
         $users = \App\Models\User::where('is_admin', 0)->get();
     @endphp
 
     @foreach ($users as $user)
-        <!-- User Information -->
+
         <div class="flex items-center mb-4">
 
             <div class="ml-4">

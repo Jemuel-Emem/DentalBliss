@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 use App\Mail\AppointmentApprovedMail;
+use App\Mail\AppointmentDeclineMail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Prescription;
 use App\Models\payment;
@@ -48,8 +49,8 @@ public function searchAppointments(){
                 'payment_date' => null,
             ]);
 
-            // Send email to the user
-            if ($appointment->user) { // Assuming the appointment has a `user` relationship
+
+            if ($appointment->user) {
                 Mail::to($appointment->user->email)->send(new AppointmentApprovedMail($appointment));
             }
 
@@ -67,15 +68,20 @@ public function searchAppointments(){
 
         if ($appointment) {
             $appointment->status = 'Declined';
-            if ($appointment->save()) {
-                session()->flash('message', 'Appointment declined successfully!');
-            } else {
-                session()->flash('message', 'Failed to decline appointment.');
+            $appointment->save();
+
+            // Send email if appointment has a user
+            if ($appointment->user) {
+                Mail::to($appointment->user->email)->send(new AppointmentDeclineMail($appointment));
             }
 
-            // Refresh the list of appointments
-            $this->appointments = Appointment::all();
+            session()->flash('message', 'Appointment declined successfully!');
+        } else {
+            session()->flash('message', 'Failed to decline appointment.');
         }
+
+        // Refresh the list of appointments
+        $this->appointments = Appointment::all();
     }
 
     public function render()
