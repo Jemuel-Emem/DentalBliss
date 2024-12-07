@@ -29,7 +29,21 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Time of Schedule</label>
-                <input type="time" wire:model="time_schedule" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                <select wire:model="time_schedule" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                    <option value="" disabled selected>Select Time</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="5:40 PM">5:40 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                </select>
                 @error('time_schedule') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
@@ -48,35 +62,7 @@
             </div>
 
 
-            {{-- <div class="sm:col-span-2">
-                <label class="block text-sm font-medium text-gray-700">Mode of Payment</label>
-                <p class="text-sm text-gray-500 mb-3">Please select your preferred mode of payment and upload a receipt if required.</p>
 
-    <div class="flex space-x-4 mb-4">
-
-        <div class="flex items-center">
-            <img src="{{ asset('images/gcash.jpg') }}" alt="Gcash" class="w-16 h-16 rounded-md shadow-md">
-        </div>
-        <div class="flex items-center">
-            <img src="{{ asset('images/bdo.jpg') }}" alt="BDO" class="w-16 h-16 rounded-md shadow-md">
-        </div>
-    </div>
-                <select wire:model="mop" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
-                    <option value="Walk-in">Walk-in</option>
-                    <option value="Gcash">Gcash</option>
-                    <option value="Credit Card">Credit Card</option>
-                </select>
-                @error('mop') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
-
-
-            <div class="sm:col-span-2" x-data="{ show: false }" x-init="$watch('$wire.mop', value => show = ['Gcash', 'Credit Card'].includes(value))">
-                <label class="block text-sm font-medium text-gray-700">Receipt (Optional for Gcash/Credit Card)</label>
-                <input type="file" wire:model="receipt" class="w-full mt-1 p-2 border border-gray-300 rounded-md" x-show="show">
-                @error('receipt') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
-        </div>
-    </div> --}}
 
     <div class="flex justify-end mt-6">
         <button wire:click="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit</button>

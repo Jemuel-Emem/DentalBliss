@@ -16,7 +16,7 @@ class Appointments extends Component
 
     public function mount()
     {
-        // Initialize appointments on component mount
+
         $this->appointments = Appointment::all();
     }
 
@@ -59,7 +59,7 @@ public function searchAppointments(){
             session()->flash('message', 'Failed to approve appointment.');
         }
 
-        // Refresh the list of appointments
+
         $this->appointments = Appointment::all();
     }
     public function decline($id)

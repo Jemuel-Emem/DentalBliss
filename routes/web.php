@@ -44,6 +44,10 @@ Route::prefix('admin')->middleware(['auth', admin::class])->group(function () {
     Route::get('/payment', function () {
         return view('admin.payment');
     })->name('pays');
+
+    Route::get('/approved', function () {
+        return view('admin.approved');
+    })->name('appro');
     Route::post('/logout', function () {
         Auth::logout();
         return redirect('/login');

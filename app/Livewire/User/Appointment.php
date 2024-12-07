@@ -25,17 +25,26 @@ class Appointment extends Component
         'phone_number' => 'required|string|max:20',
         'address' => 'required|string|max:255',
         'date_schedule' => 'required|date',
-        'time_schedule' => 'required|date_format:H:i',
+        'time_schedule' => 'required',
         'reason' => 'required|string|max:500',
 
     ];
 
     public function submit()
     {
+
         $this->validate();
 
 
-        //$receiptPath = $this->receipt ? $this->receipt->store('receipts', 'public') : null;
+        $existingAppointment = Appointments::where('date_schedule', $this->date_schedule)
+            ->where('time_schedule', $this->time_schedule)
+            ->exists();
+
+        if ($existingAppointment) {
+            flash()->info('An appointment already exists for the selected date and time. Please choose a different slot.');
+
+            return;
+        }
 
         Appointments::create([
             'user_id' => Auth::id(),
@@ -45,14 +54,14 @@ class Appointment extends Component
             'date_schedule' => $this->date_schedule,
             'time_schedule' => $this->time_schedule,
             'reason' => $this->reason,
-           // 'mop' => $this->mop,
-           // 'receipt' => $receiptPath,
             'status' => 'processing',
         ]);
+
 
         $this->reset();
 
         flash()->success('Appointment created successfully!');
+
     }
 
     public function render()
