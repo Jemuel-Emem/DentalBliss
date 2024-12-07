@@ -1,7 +1,7 @@
 <div>
-    <div>
+    {{-- <div>
         <a href="{{route('appro')}}" class="bg-blue-500 text-white p-2 rounded">Approved Appointments</a>
-    </div>
+    </div> --}}
     <div class="p-6 bg-white rounded-lg shadow-lg">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Appointments</h2>
 
