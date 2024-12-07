@@ -43,6 +43,7 @@
                     <option value="5:00 PM">5:00 PM</option>
                     <option value="5:40 PM">5:40 PM</option>
                     <option value="6:00 PM">6:00 PM</option>
+                    <option value="11:01 PM">11:01 PM</option>
                 </select>
                 @error('time_schedule') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>

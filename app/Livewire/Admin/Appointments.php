@@ -3,9 +3,11 @@
 namespace App\Livewire\Admin;
 use App\Mail\AppointmentApprovedMail;
 use App\Mail\AppointmentDeclineMail;
+use App\Jobs\SendAppointmentReminderJob;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Prescription;
 use App\Models\payment;
+use Carbon\Carbon;
 use App\Models\Appointment;
 use Livewire\Component;
 
@@ -53,7 +55,16 @@ public function searchAppointments(){
             if ($appointment->user) {
                 Mail::to($appointment->user->email)->send(new AppointmentApprovedMail($appointment));
             }
+            $time = Carbon::parse($appointment->time_schedule)->format('H:i:s');
+            $date = Carbon::parse($appointment->date_schedule);
 
+            $mergedDateTime = $date->setTimeFromTimeString($time);
+            $reminder = $mergedDateTime->subHour();
+
+            if ($appointment->user) {
+                Mail::to($appointment->user->email)->send(new AppointmentApprovedMail($appointment));
+                SendAppointmentReminderJob::dispatch($appointment)->delay($reminder->diffInSeconds(now()));
+            }
             session()->flash('message', 'Appointment approved successfully!');
         } else {
             session()->flash('message', 'Failed to approve appointment.');
@@ -80,7 +91,6 @@ public function searchAppointments(){
             session()->flash('message', 'Failed to decline appointment.');
         }
 
-        // Refresh the list of appointments
         $this->appointments = Appointment::all();
     }
 
