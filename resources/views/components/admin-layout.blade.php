@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dentabliss Dental Care</title>
+    <title>Dental Bliss </title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet"/>
@@ -100,7 +100,7 @@
         <div class="h-full px-3 py-4 overflow-y-auto">
             <div class="text-center flex flex-col items-center">
                 <img src="{{asset('images/dental-floss.png')}}" alt="Admin">
-                <div class="font-bold  text-2xl text-red-500">Dentabliss Dental Care</div>
+                <div class="font-bold  text-2xl text-red-500">Dental Bliss</div>
             </div>
             <ul class="space-y-2 font-medium mt-4">
                 <li>
