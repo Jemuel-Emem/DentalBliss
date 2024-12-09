@@ -30,49 +30,57 @@ public function searchAppointments(){
 
 }
 
-    public function approve($id)
-    {
-        $appointment = Appointment::find($id);
+public function approve($id)
+{
+    $appointment = Appointment::find($id);
 
-        if ($appointment) {
-            $appointment->status = 'Approved';
-            $appointment->save();
-
-            Prescription::create([
-                'appointment_id' => $appointment->id,
-                'treatment' => '',
-                'medicine' => '',
-            ]);
-
-            payment::create([
-                'user_id' => $appointment->user_id,
-                'appointment_id' => $appointment->id,
-                'status' => 'pending',
-                'payment_date' => null,
-            ]);
+    if ($appointment) {
+        $appointment->status = 'Approved';
+        $appointment->save();
 
 
-            if ($appointment->user) {
-                Mail::to($appointment->user->email)->send(new AppointmentApprovedMail($appointment));
-            }
-            $time = Carbon::parse($appointment->time_schedule)->format('H:i:s');
-            $date = Carbon::parse($appointment->date_schedule);
+        Prescription::create([
+            'appointment_id' => $appointment->id,
+            'treatment' => '',
+            'medicine' => '',
+        ]);
 
-            $mergedDateTime = $date->setTimeFromTimeString($time);
-            $reminder = $mergedDateTime->subHour();
-
-            if ($appointment->user) {
-                Mail::to($appointment->user->email)->send(new AppointmentApprovedMail($appointment));
-                SendAppointmentReminderJob::dispatch($appointment)->delay($reminder->diffInSeconds(now()));
-            }
-            session()->flash('message', 'Appointment approved successfully!');
-        } else {
-            session()->flash('message', 'Failed to approve appointment.');
-        }
+        payment::create([
+            'user_id' => $appointment->user_id,
+            'appointment_id' => $appointment->id,
+            'status' => 'pending',
+            'payment_date' => null,
+        ]);
 
 
-        $this->appointments = Appointment::all();
-    }
+
+  $time = Carbon::parse($appointment->time_schedule)->format('H:i:s');
+  $date = Carbon::parse($appointment->date_schedule);
+
+  $mergedDateTime = $date->setTimeFromTimeString($time);
+
+  $reminder = $mergedDateTime->subHour();
+
+  $delayInSeconds = max(0, now()->diffInSeconds($reminder, false));
+  if ($appointment->user) {
+      Mail::to($appointment->user->email)->send(new AppointmentApprovedMail($appointment));
+
+      SendAppointmentReminderJob::dispatch($appointment)->delay($delayInSeconds);
+
+  }
+
+
+
+  session()->flash('message', 'Appointment approved successfully!');
+} else {
+  session()->flash('message', 'Failed to approve appointment.');
+}
+
+
+$this->appointments = Appointment::all();
+}
+
+
     public function decline($id)
     {
         $appointment = Appointment::find($id);
